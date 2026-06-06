@@ -92,77 +92,117 @@
         .edu-card { background: #fff; border-radius: var(--border-radius); padding: 25px; border: 3px solid var(--primary-pink); box-shadow: 5px 5px 0px var(--primary-pink); }
         .edu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: bold; }
 
-        /* --- 核心 3D 翻转塔罗牌引擎 --- */
+        /* 核心 3D 翻转塔罗牌引擎 */
         .tarot-wrapper { display: flex; justify-content: space-between; gap: 12px; overflow-x: auto; padding: 30px 5px; }
         .tarot-stage { flex: 1; min-width: 135px; height: 210px; perspective: 1000px; }
-        
-        .tarot-card-inner {
-            position: relative;
-            width: 100%; height: 100%;
-            text-align: center;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
+        .tarot-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
         .tarot-stage:hover .tarot-card-inner, .tarot-stage.flipped .tarot-card-inner { transform: rotateY(180deg); }
-        
         .tarot-front, .tarot-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 10px; }
-        
-        /* 🌸 技能牌背面花纹 */
         .tarot-back { background: linear-gradient(135deg, #FFE4E1 0%, #F3E5F5 100%); border: 3px dashed #FF6B8B; color: #FF6B8B; }
         .tarot-back-design { border: 1px solid rgba(255,107,139,0.3); width: 100%; height: 100%; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
         .tarot-back-title { font-size: 0.85rem; font-weight: bold; letter-spacing: 2px; border-top: 1px dashed #FF6B8B; border-bottom: 1px dashed #FF6B8B; padding: 2px 0; }
-
-        /* 🌸 技能牌正面 */
         .tarot-front { background: #FFFFFF; border: 3px double var(--primary-pink); transform: rotateY(180deg); }
         .tarot-icon { font-size: 2.2rem; margin-bottom: 12px; }
         .tarot-title { font-size: 0.95rem; font-weight: bold; }
 
-        /* 实习履历 */
-        .timeline { display: flex; flex-direction: column; gap: 30px; }
-        .timeline-item { background: #fff; border-radius: var(--border-radius); padding: 30px; border: 3px solid #FFE4E1; box-shadow: 6px 6px 0px #FFE4E1; }
-        .timeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .company-tag { background: var(--primary-blue); padding: 6px 18px; border-radius: 20px; font-weight: bold; }
-        .exp-details { font-size: 0.95rem; line-height: 1.7; }
+        /* 实习履历深度优化布局 */
+        .timeline { display: flex; flex-direction: column; gap: 35px; }
+        .timeline-item { background: #fff; border-radius: var(--border-radius); padding: 35px; border: 3px solid #FFE4E1; box-shadow: 6px 6px 0px #FFE4E1; }
+        .timeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .company-tag { background: var(--primary-blue); padding: 8px 22px; border-radius: 20px; font-weight: bold; font-size: 1.05rem; }
+        .exp-details { font-size: 0.95rem; line-height: 1.75; }
+        .exp-details h4 { margin: 15px 0 6px 0; color: #FF6B8B; font-size: 1rem; }
+        .exp-details h4:first-child { margin-top: 0; }
 
         /* 产品案例 */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
         .project-card { background: #fff; border-radius: var(--border-radius); border: 3px solid var(--primary-green); box-shadow: 6px 6px 0px var(--primary-green); padding: 28px; }
         .project-badge { display: inline-block; background: #E8F5E9; color: #2E7D32; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 12px; font-weight: bold; }
 
-        /* --- ✨ 生活高光板块：纯背面初始化、无文字泄露、点击翻转结构 --- */
+        /* 生活高光板块 4 列 3D 翻转矩阵布局 */
         .gallery-tarot-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 25px; }
         .life-stage { height: 400px; perspective: 1200px; cursor: pointer; }
-        .life-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; box-shadow: 0 8px 16px rgba(0,0,0,0.04); border-radius: var(--border-radius); }
-        
-        /* 核心逻辑：只有在被赋予 .flipped 样式类时，才会发生 3D 旋转翻面 */
+        .life-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
         .life-stage.flipped .life-card-inner { transform: rotateY(180deg); }
-        
         .life-front, .life-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--border-radius); padding: 18px; }
-        
-        /* 🔒 绝密大背面：刚打开网站时展示，彻底隐藏内部的任何图片、任何文字 */
         .life-back { background: linear-gradient(135deg, #FFF0F5 0%, #E3F2FD 100%); border: 4px double #FFD1DC; }
         .life-back-box { border: 2px dashed var(--primary-pink); width: 100%; height: 100%; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
         .back-magic-icon { font-size: 3rem; animation: pulse 2s infinite ease-in-out; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
-
-        /* 🔓 翻转正面：展示你的真实照片和小猫小狗物理贴纸 */
         .life-front { background: #FFFFFF; border: 4px solid var(--primary-pink); transform: rotateY(180deg); display: flex; flex-direction: column; }
         .img-container { width: 100%; height: 250px; overflow: hidden; border-radius: 16px; margin-bottom: 12px; position: relative; background: #FAFAFA; }
         .img-container img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 🐾 物理贴纸图层：完美覆盖在你照片中的马赛克区域上 */
+        /* 钢琴证书物理可爱贴纸 */
         .sticker-layer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
         .sticker-cat { position: absolute; top: 32%; left: 24%; width: 85px; height: 85px; background: #FFCCD5; border-radius: 50%; border: 4px solid #FFF; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; box-shadow: 0 6px 12px rgba(0,0,0,0.15); animation: wiggle 2.5s infinite ease-in-out; }
         .sticker-dog { position: absolute; bottom: 10%; left: 22%; width: 70px; height: 70px; background: #E8F5E9; border-radius: 18px; border: 4px solid #FFF; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; box-shadow: 0 6px 12px rgba(0,0,0,0.15); transform: rotate(-12deg); }
         @keyframes wiggle { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg) scale(1.03); } }
-
         .gallery-desc { font-size: 0.9rem; font-weight: bold; line-height: 1.5; color: var(--text-color); margin-top: auto; }
 
-        /* AI工坊与页脚 */
-        .prompt-container { background: #fff; border-radius: var(--border-radius); padding: 30px; border: 3px solid var(--primary-pink); }
-        .prompt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .prompt-box { background: #FAFAFA; border-radius: 16px; padding: 20px; border: 2px dashed #FFD1DC; }
-        .prompt-code { background: #FFFFFF; padding: 12px; border-radius: 10px; font-size: 0.85rem; font-family: monospace; white-space: pre-wrap; border: 1px solid #EEE; }
+        /* --- 🎁 AI工坊：可伸缩卡片高级设计 --- */
+        .prompt-container { background: #fff; border-radius: var(--border-radius); padding: 35px; border: 3px solid var(--primary-pink); }
+        .prompt-card-collapsible {
+            background: #FAFAFA;
+            border-radius: 20px;
+            border: 2px dashed #FFD1DC;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .prompt-card-collapsible:hover {
+            box-shadow: 0 6px 15px rgba(255, 209, 220, 0.5);
+            background: #FFFDE7;
+        }
+        .prompt-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #FF6B8B;
+        }
+        .prompt-badge-click {
+            font-size: 0.85rem;
+            background: var(--primary-blue);
+            color: #0277BD;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+        .prompt-short-intro {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #777;
+        }
+        
+        /* 详细内容（默认隐藏且带有高度过渡动画） */
+        .prompt-detailed-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, margin-top 0.3s ease;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        .prompt-card-collapsible.active .prompt-detailed-content {
+            max-height: 1000px; /* 展开后的极限高度 */
+            margin-top: 20px;
+            border-top: 1px dashed #FFD1DC;
+            padding-top: 15px;
+        }
+        .prompt-block {
+            background: #FFFFFF;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #EEE;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        /* 页脚 */
         footer { background: #fff; border-top: 3px solid var(--primary-pink); padding: 45px 20px; text-align: center; margin-top: 60px; }
         .footer-buttons { display: flex; justify-content: center; gap: 30px; margin-bottom: 25px; }
         .icon-btn { width: 65px; height: 65px; border-radius: 50%; background: var(--bg-color); border: 3px solid var(--primary-pink); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; transition: all 0.3s; text-decoration: none; color: inherit; position: relative; }
@@ -204,13 +244,14 @@
     <!-- 个人首屏区域 -->
     <header class="container hero-section" id="home">
         <div class="avatar-container">
-            <img src="https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/094aa9b6defa472a2dcbc63353ed2ac6.jpg" alt="朱香凝">
+            <!-- 1. 完美关联你上传至GitHub的真实照片！(默认文件名为 avatar.jpg，可根据实际上传名字微调) -->
+            <img src="me.jpg" alt="朱香凝的真人自拍照" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/094aa9b6defa472a2dcbc63353ed2ac6.jpg'">
         </div>
         <div class="hero-info">
             <h1>朱香凝 (XianNing) 🐾</h1>
-            <div class="hero-subtitle">浙江大学 · 金融硕士 (金融科技方向) 🎓</div>
+            <div class="hero-subtitle">浙江大学 · 金融硕士 (金融科技方向) 🎓[cite: 2]</div>
             <div class="slogan-box">
-                「用数据拆解复杂需求，将 AI 基因无缝注入产品全链路。常年沉迷于 vibe coding 的 AI 极客型产品经理！✨」
+                「用数据拆解复杂需求，将 AI 基因无缝注入产品全链路。常年沉迷于 vibe coding 的 AI 产品经理！✨」[cite: 2]
             </div>
         </div>
     </header>
@@ -219,14 +260,14 @@
     <section class="container">
         <div class="edu-grid">
             <div class="edu-card">
-                <div class="edu-header"><span>浙江大学 (985、双一流) 🏫</span><span style="color:#FF6B8B;">2025.09 - 2027.06</span></div>
-                <p><strong>金融硕士 (金融科技方向)</strong> · 专业排名前 10% 🌟</p>
-                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: 金融机器学习方法(90)、区块链与数字货币(90)、投资学(96)</p>
+                <div class="edu-header"><span>浙江大学 (985、双一流) 🏫[cite: 2]</span><span style="color:#FF6B8B;">2025.09 - 2027.06[cite: 2]</span></div>
+                <p><strong>金融硕士 (金融科技方向)</strong> · 专业排名前 10% 🌟[cite: 2]</p>
+                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: 金融机器学习方法(90)、区块链与数字货币(90)、投资学(96)[cite: 2]</p>
             </div>
             <div class="edu-card">
-                <div class="edu-header"><span>上海立信会计金融学院 🏫</span><span style="color:#FF6B8B;">2021.09 - 2025.06</span></div>
-                <p><strong>金融学</strong> · 综合绩点 3.87/4.0，63门满绩 🏆</p>
-                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: Python技术(97)、MATLAB(98)、计量经济学(98)</p>
+                <div class="edu-header"><span>上海立信会计金融学院 🏫[cite: 2]</span><span style="color:#FF6B8B;">2021.09 - 2025.06[cite: 2]</span></div>
+                <p><strong>金融学</strong> · 综合绩点 3.87/4.0，63门满绩 🏆[cite: 2]</p>
+                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: Python技术(97)、MATLAB(98)、计量经济学(98)[cite: 2]</p>
             </div>
         </div>
     </section>
@@ -245,100 +286,112 @@
         </div>
     </section>
 
-    <!-- 项目区 -->
+    <!-- 2. 深度扩充丰富后的三大顶流大厂实习履历 -->
     <section class="container" id="experience">
-        <h2 class="section-title">大厂履历足迹</h2>
+        <h2 class="section-title">大厂产品实习履历 (硬核量化成果)</h2>
         <div class="timeline">
+            
+            <!-- 美团 -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div><span class="company-tag" style="background-color:#FFF9C4;">美团 | 核心商业部</span><strong style="margin-left:12px;">产品实习生</strong></div>
-                    <span style="color:#999; font-size:0.9rem;">2025.10 - 2026.02</span>
+                    <div><span class="company-tag" style="background-color:#FFF9C4;">美团 | 核心商业部</span><strong style="margin-left:12px;">产品实习生[cite: 2]</strong></div>
+                    <span style="color:#999; font-size:0.9rem;">2025.10 - 2026.02[cite: 2]</span>
                 </div>
                 <div class="exp-details">
-                    <p><strong>• 合约保量卡产品策略：</strong>主导推出灰度付费合约保量卡产品。上线后ACP提升26.33%，广告收入提升 63%。</p>
+                    <h4>📊 【保量卡产品全链路设计】[cite: 2]</h4>
+                    <p>围绕商户关于广告位不可控、流量波动性大、平均投流差的核心痛点进行深度数据挖掘，分析位次分布、广告露出概率和 ROI 等关键指标[cite: 2]。洞察到商户对于“固定广告位”的前置付费（CPT）买单意愿，主导推出“合约保量卡”产品并完成灰度投放[cite: 2]。项目上线后，**商户ACP提升26.33%，大盘广告收入显著增长63%**[cite: 2]。</p>
+                    
+                    <h4>⚙️ 【跨系统商家购买生态搭建】[cite: 2]</h4>
+                    <p>为全面保障商户购买的操作便捷性、流程安全性和营销可宣传性，重新制定了“销售统一开通权限、运营中台集中审核、审核通过后商户一键购买”的闭环链路[cite: 2]。针对该流程，**全权主导并落地搭建了销售工作台系统、凤巢系统和开店宝系统**[cite: 2]。</p>
+                    
+                    <h4>🧠 【可售流量算法管理与策略优化】[cite: 2]</h4>
+                    <p>针对位置不固定难题，通过对不同位次广告增速的深入分析，推出 Top3 固定位置[cite: 2]。协同算法团队设计可售卖流量预测模型，建立智能保量补量逻辑与流量库存管理系统[cite: 2]。上线后，**库存补量机制为商户带来了额外 10.5% 的流量，创造了 11.5% 的广告收入增长，帮助商户拉平 ROI 的同时实现 ROI 环比增长 2.43%**[cite: 2]。同时推出“AI关键词相关性打标策略+人工交叉验证”机制，大幅优化了排序模型的精度[cite: 2]。</p>
                 </div>
             </div>
+
+            <!-- 腾讯 -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div><span class="company-tag" style="background-color:#E1BEE7;">携程 | 前端技术产品部</span><strong style="margin-left:12px;">产品实习生</strong></div>
-                    <span style="color:#999; font-size:0.9rem;">2026.02 - 2026.05</span>
+                    <div><span class="company-tag" style="background-color:#B3E5FC;">腾讯 | QQ音乐业务线</span><strong style="margin-left:12px;">产品实习生[cite: 2]</strong></div>
+                    <span style="color:#999; font-size:0.9rem;">2024.10 - 2025.03[cite: 2]</span>
                 </div>
                 <div class="exp-details">
-                    <p><strong>• AI智能打标体系构建：</strong>算法标签覆盖率从35%提升至83.52%，单月节省人工工时120+小时。</p>
+                    <h4>🎨 【播放器视觉自定义与留存优化】[cite: 2]</h4>
+                    <p>针对近三月用户推荐流播放完成率下降、播放页人均停留时长缩短、次月留存降低等信息茧房痛点开展专项调优[cite: 2]。重构播放器风格界面，一期丰富了复古、动感等多元化品类选择，二期深度推出了**高自由度的 DIY 模式**（用户可自主添加小组件并进行频谱、触感等个性化配置）[cite: 2]。上线后，**播放器人均停留时长显著增加 17%，次周留存率高达 57.49%**[cite: 2]。</p>
+                    
+                    <h4>🔮 【AI 情绪化打标与场景重排序】[cite: 2]</h4>
+                    <p>基于主动搜索/歌单占比上升、推荐流下滑的数据表现，精准识别出用户场景化使用率升高的诉求[cite: 2]。**设计并应用 AI 情绪化标签与歌曲风格自动化打标策略**，输入核心数据库并精细化配置 Prompt 与限制条件，对推荐算法流实施重新排序与强过滤[cite: 2]。项目落地后，**推荐流播放完成率成功提升 16.6%，人均日访问次数提高了 4.3%**[cite: 2]。</p>
+                    
+                    <h4>🎯 【个性化推荐偏好配置界面搭建】[cite: 2]</h4>
+                    <p>针对用户“不感兴趣”点击率上涨的痛点，创新引入用户基础特性、行为统计特征、兴趣预测特征“三要素”法则[cite: 2]。**独立设计并搭建了歌曲熟悉度、音乐情绪、歌曲风格的偏好配置界面**，将其作为算法推荐、召回、过滤、排序的底层核心依据[cite: 2]。上线后，**用户“不感兴趣”点击率大幅降低 5.78%，音乐偏好配置率高达到 65.91%**[cite: 2]。</p>
                 </div>
             </div>
+
+            <!-- 携程 -->
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div><span class="company-tag" style="background-color:#E1BEE7;">携程 | 前端技术产品部</span><strong style="margin-left:12px;">产品实习生[cite: 2]</strong></div>
+                    <span style="color:#999; font-size:0.9rem;">2026.02 - 2026.05[cite: 2]</span>
+                </div>
+                <div class="exp-details">
+                    <h4>⚡ 【标签中台核心功能迭代与降本增效】[cite: 2]</h4>
+                    <p>针对原有系统仅支持单条标签创建、规则配置重复低效的严峻痛点，主导设计并落地了**标签自定义规则复制、批量开启打标测试、标签与实体关联关系实时查询**三大核心功能[cite: 2]。大幅精简并优化了 POI 打标、新建标签、标签上树等复杂的后台操作流转程序[cite: 2]。上线后，**单条标签规则配置时间从 20 分钟缩短至 3 分钟，中台整体配置效率疯狂提升 83.69%**[cite: 2]。</p>
+                    
+                    <h4>🤖 【大模型混合智能打标体系从0到1落地】[cite: 2]</h4>
+                    <p>为彻底解决传统人工打标效率低下、规则主观误差巨大的问题，配合公司“AI 出行顾问小助手”核心战略项目，设计了基于多信源权重的标签置信分计算公式[cite: 2]。成功划分了 T0 核心至 T3 长尾的四级标签架构体系，建立分层抽样测试集选取规范，**首创并搭建了“LLM 大模型初标 + 人工抽样复核”的混合打标长效机制**[cite: 2]。落地后，**算法标签覆盖率从 35% 暴涨至 83.52%，整体标签召回率达 90.2%，单月净节省人工打标工时 120+ 小时**[cite: 2]。</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- ✨ 核心升级：生活高光塔罗牌矩阵（点开纯背面无字，点击触发翻转） -->
+    <!-- 生活高光板块 (4张真实照片，相对路径，初始纯背面无字) -->
     <section class="container" id="life">
-        <h2 class="section-title">香凝的生活高光神秘塔罗牌 (点击卡片进行解密翻转)</h2>
+        <h2 class="section-title">香凝的生活高光 3D 塔罗牌 (点击卡片进行解密翻转)</h2>
         <div class="gallery-tarot-wrapper">
             
-            <!-- 生活牌 1：浙大入学 -->
+            <!-- 浙大入学 -->
             <div class="life-stage">
                 <div class="life-card-inner">
-                    <!-- 🔒 初始化背面（点开时只有这个） -->
-                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎓</div><span style="font-weight:bold; color:#FF6B8B; letter-spacing: 1px;">点击解密【新上人卡】</span></div></div>
-                    <!-- 🔓 翻转后的正面（点击才展现照片和文案） -->
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎓</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【新上人卡】</span></div></div>
                     <div class="life-front">
-                        <div class="img-container">
-                            <!-- ⚠️【填空 1】：请把下面的网址替换为你上传成功后的“浙大入学照直链” -->
-                            <img src="zju.jpg.jpg">
-                        </div>
-                        <div class="gallery-desc">🦁 【新上人卡】求是创新，开启在浙江大学（ZIBS）追求金融科技梦想的全新序章！</div>
+                        <div class="img-container"><img src="zju.jpg.jpg" alt="浙大开学留念" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/a6c7417bc115325858f87bb7aeee25e0.jpg'"></div>
+                        <div class="gallery-desc">🦁 【新上人卡】求是创新，开启在浙江大学追求金融科技梦想的全新序章！[cite: 2]</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 生活牌 2：萌猫主子 -->
+            <!-- 萌猫主子 -->
             <div class="life-stage">
                 <div class="life-card-inner">
-                    <!-- 🔒 初始化背面 -->
-                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🐈</div><span style="font-weight:bold; color:#FF6B8B; letter-spacing: 1px;">点击解密【萌猫卡】</span></div></div>
-                    <!-- 🔓 翻转后的正面 -->
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🐈</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【萌猫卡】</span></div></div>
                     <div class="life-front">
-                        <div class="img-container">
-                            <!-- ⚠️【填空 2】：请把下面的网址替换为你上传成功后的“三只猫咪合照直链” -->
-                            <img src="cats.jpg.jpg" alt="猫咪主子">
-                        </div>
-                        <div class="gallery-desc">🐱 【萌猫卡】陪伴我疯狂学术研究与熬夜 vibe coding 的三只高颜值猫咪主子</div>
+                        <div class="img-container"><img src="cats.jpg.jpg" alt="猫咪主子" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/a980dc15bf4d60791dbeeee3d71323c2.jpg'"></div>
+                        <div class="gallery-desc">🐱 【萌猫卡】陪伴我疯狂学术研究与兼顾大厂实习的三只高颜值猫咪主子[cite: 2]</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 生活牌 3：钢琴证书（内置防泄漏贴纸） -->
+            <!-- 钢琴证书 -->
             <div class="life-stage">
                 <div class="life-card-inner">
-                    <!-- 🔒 初始化背面 -->
-                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎹</div><span style="font-weight:bold; color:#FF6B8B; letter-spacing: 1px;">点击解密【实力卡】</span></div></div>
-                    <!-- 🔓 翻转后的正面 -->
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎹</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【爱好卡】</span></div></div>
                     <div class="life-front">
                         <div class="img-container">
-                            <!-- ⚠️【填空 3】：请把下面的网址替换为你上传成功后的“钢琴证书照片直链” -->
-                            <img src="piano.jpg.jpg" alt="钢琴十级证书">
-                            <!-- 🐾 卡哇伊防泄漏贴纸图层：精确定位阻挡马赛克 -->
-                            <div class="sticker-layer">
-                                <div class="sticker-cat">🐱</div>
-                                <div class="sticker-dog">🐶🐾</div>
-                            </div>
+                            <img src="piano.jpg.jpg" alt="钢琴十级证书" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/7e05a18102bba68457f4b761db7c68eb.jpg'">
+                            <div class="sticker-layer"><div class="sticker-cat">🐱</div><div class="sticker-dog">🐶🐾</div></div>
                         </div>
-                        <div class="gallery-desc">🎹 【爱好卡】热爱钢琴</div>
+                        <div class="gallery-desc">🎹 【爱好卡】热爱钢琴[cite: 2]</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 生活牌 4：元气童心 -->
+            <!-- 元气童心 -->
             <div class="life-stage">
                 <div class="life-card-inner">
-                    <!-- 🔒 初始化背面 -->
-                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🏰</div><span style="font-weight:bold; color:#FF6B8B; letter-spacing: 1px;">点击解密【童心卡】</span></div></div>
-                    <!-- 🔓 翻转后的正面 -->
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🏰</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【童心卡】</span></div></div>
                     <div class="life-front">
-                        <div class="img-container">
-                            <!-- ⚠️【填空 4】：请把下面的网址替换为你上传成功后的“迪士尼合照直链” -->
-                            <img src="disney.jpg.jpg" alt="迪士尼合影">
-                        </div>
+                        <div class="img-container"><img src="disney.jpg.jpg" alt="迪士尼合影" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/d410046f3b0363fa6ebfcc3666d0029a.jpg'"></div>
                         <div class="gallery-desc">✨ 【童心卡】常葆满格童心、好奇心与敏锐生活洞察力</div>
                     </div>
                 </div>
@@ -347,37 +400,86 @@
         </div>
     </section>
 
-    <!-- AI 工坊 -->
+    <!-- ③ AI 工坊：可折叠/可收缩的高级Prompt小方格 -->
     <section class="container" id="prompts">
         <div class="prompt-container">
-            <h3 style="color:#FF6B8B; font-size:1.5rem; margin-bottom:5px;">🤖 香凝的 AI 狂热爱好工坊</h3>
-            <div class="prompt-grid">
-                <div class="prompt-box">
-                    <div class="prompt-title">🎵 音乐情绪AI打标</div>
-                    <div class="prompt-code">"你现在是一个资神乐评家，请根据我给出的歌词文本及BPM，将其拆解并归类至 [深夜emo, 阳光元气] 情绪标签中..."</div>
+            <h2 class="section-title" style="transform:none; left:0; text-align:left;">🤖 香凝的 AI 狂热爱好工坊</h2>
+            <p style="font-size:0.95rem; color:#777; margin-bottom: 20px;">常年沉迷大模型应用层开发，擅长通过高精度的级联式 Prompt 策略，将大模型能力完美糅合进复杂的业务场景：</p>
+            
+            <!-- 可伸缩 Prompt 卡片 -->
+            <div class="prompt-card-collapsible" id="qqmusicPromptCard">
+                <div class="prompt-card-header">
+                    <span>🎵 QQ音乐专业级歌曲情绪与风格分析标签算法 Prompt</span>
+                    <span class="prompt-badge-click" id="toggleBadge">点击展开详细 展开/收起</span>
+                </div>
+                <div class="prompt-short-intro">
+                    <strong>缩略简介：</strong>该智能体充当QQ音乐精细化打标中台核心引擎，负责对海量复杂歌词、评论等多模态信源进行极度严苛的“少而精”标签聚类，杜绝模糊输出[cite: 2]。
+                </div>
+                
+                <!-- 隐藏的详细模式 -->
+                <div class="prompt-detailed-content">
+                    <p><strong>完整的业务级 System Prompt 规则设计：</strong></p>
+                    <div class="prompt-block">你是QQ音乐专业的歌曲情绪与风格分析师，负责为歌曲精准打标签。
+
+【任务】
+1. 分析歌曲的歌词文本、评论、歌手信息和翻唱版本，输出1-3个核心情绪标签
+2. 分析歌曲的音乐特征和人声情况，输出对应的风格标签
+
+【禁止规则】
+- 禁止输出模糊标签，如"还行""一般"
+- 禁止使用超出以下范围的情绪词：欢乐、悲伤、怀旧、治愈、激昂、平静、紧张、浪漫
+- 禁止添加任何解释性文字，仅输出标签
+- 禁止为非音乐内容打标
+
+【输出格式】
+情绪标签,风格标签（如：悲伤,怀旧,治愈,中文流行）
+
+【输入数据模板】
+歌词：[此处插入歌词文本]
+评论：[此处插入高赞评论]
+歌手：[歌手姓名]
+翻唱情况：[有无翻唱，翻唱版本风格]
+音乐特征：[是否有人声，语言类型，节奏快慢]</div>
                 </div>
             </div>
+            
         </div>
     </section>
 
     <!-- 页脚 -->
     <footer id="contact">
         <div class="footer-buttons">
-            <a class="icon-btn" data-tips="微信: 15124097985">💬</a>
-            <a class="icon-btn" href="mailto:15124097985@163.com" data-tips="邮箱: 15124097985@163.com">✉️</a>
+            <a class="icon-btn" data-tips="微信: 15124097985">💬[cite: 2]</a>
+            <a class="icon-btn" href="mailto:15124097985@163.com" data-tips="邮箱: 15124097985@163.com">✉️[cite: 2]</a>
             <a class="icon-btn" href="#" data-tips="点击下载PDF版简历">📄</a>
         </div>
-        <p style="font-size: 0.9rem; color: #B5A69A; font-weight: bold;">✨ 中共党员 | 期待与您创造更多精彩产品 ✨</p>
+        <p style="font-size: 0.9rem; color: #B5A69A; font-weight: bold;">✨ 中共党员[cite: 2] | 期待与您创造更多精彩产品 ✨</p>
+        <p style="font-size: 0.8rem; color: #CCC; margin-top: 10px;">Copyright © 2026 朱香凝. All Rights Reserved.</p>
     </footer>
 
-    <!-- 统一的核心 JavaScript 点击翻转控制器 -->
     <script>
-        // 专门为生活板块高光塔罗牌绑定的点击切换函数
+        // 1. 生活高光 3D 翻转控制器 (完全独立控制)
         document.querySelectorAll('.life-stage').forEach(card => {
             card.addEventListener('click', () => {
-                // toggle控制：点一下翻转过去，再点一下翻转回来
                 card.classList.toggle('flipped');
             });
+        });
+
+        // 2. AI 工坊 Prompt 缩略与详细模式切换 JavaScript 控制逻辑
+        const promptCard = document.getElementById('qqmusicPromptCard');
+        const toggleBadge = document.getElementById('toggleBadge');
+
+        promptCard.addEventListener('click', (e) => {
+            promptCard.classList.toggle('active');
+            if (promptCard.classList.contains('active')) {
+                toggleBadge.innerText = '点击收起面板 ↩️';
+                toggleBadge.style.background = '#FFD1DC';
+                toggleBadge.style.color = '#D81B60';
+            } else {
+                toggleBadge.innerText = '点击展开详细 展开/收起';
+                toggleBadge.style.background = '#B3E5FC';
+                toggleBadge.style.color = '#0277BD';
+            }
         });
     </script>
 </body>
