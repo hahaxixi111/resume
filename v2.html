@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>朱香凝 | 产品经理个人简历官网</title>
+    <style>
+        /* --- 1. 全局样式与马卡龙可爱配色 --- */
+        :root {
+            --bg-color: #FFFBD9;       /* 柔和淡黄色 */
+            --primary-pink: #FFD1DC;   /* 浅粉马卡龙 */
+            --primary-blue: #B3E5FC;   /* 软绵绵蓝 */
+            --primary-green: #C1E1C1;  /* 浅绿马卡龙 */
+            --text-color: #5D5146;     /* 温暖深褐 */
+            --card-bg: #FFFFFF;
+            --border-radius: 24px;     
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Chalkboard SE", "Microsoft YaHei", sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 可爱背景漂浮物 */
+        .decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .decor-item {
+            position: absolute;
+            font-size: 26px;
+            opacity: 0.5;
+            animation: floatUpDown 4s ease-in-out infinite;
+        }
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(8deg); }
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 3px solid var(--primary-pink);
+            border-radius: 50px;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(255, 209, 220, 0.4);
+        }
+        .nav-logo { font-weight: bold; font-size: 1.3rem; color: #FF6B8B; text-decoration: none; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: all 0.2s; }
+        .nav-links a:hover { transform: scale(1.2); color: #FF6B8B; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; }
+        section { padding: 90px 0 30px 0; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 45px; position: relative; display: inline-block; left: 50%; transform: translateX(-50%); }
+        .section-title::after { content: ' ✨🐾'; color: #FF6B8B; }
+
+        /* 首屏区域 */
+        .hero-section { display: flex; align-items: center; justify-content: center; gap: 60px; padding-top: 160px; }
+        .avatar-container { width: 200px; height: 200px; border-radius: 50%; border: 6px solid var(--primary-pink); background: #fff; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .avatar-container img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-info { max-width: 650px; }
+        .hero-info h1 { font-size: 2.8rem; color: #FF6B8B; margin-bottom: 8px; }
+        .slogan-box { background: var(--card-bg); border: 3px dashed var(--primary-blue); border-radius: var(--border-radius); padding: 18px 22px; font-style: italic; box-shadow: 6px 6px 0px var(--primary-blue); line-height: 1.6; }
+
+        /* 教育背景 */
+        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 25px; margin-bottom: 20px; }
+        .edu-card { background: #fff; border-radius: var(--border-radius); padding: 25px; border: 3px solid var(--primary-pink); box-shadow: 5px 5px 0px var(--primary-pink); }
+        .edu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: bold; }
+
+        /* 核心 3D 翻转塔罗牌引擎 */
+        .tarot-wrapper { display: flex; justify-content: space-between; gap: 12px; overflow-x: auto; padding: 30px 5px; }
+        .tarot-stage { flex: 1; min-width: 135px; height: 210px; perspective: 1000px; }
+        .tarot-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .tarot-stage:hover .tarot-card-inner, .tarot-stage.flipped .tarot-card-inner { transform: rotateY(180deg); }
+        .tarot-front, .tarot-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px 10px; }
+        .tarot-back { background: linear-gradient(135deg, #FFE4E1 0%, #F3E5F5 100%); border: 3px dashed #FF6B8B; color: #FF6B8B; }
+        .tarot-back-design { border: 1px solid rgba(255,107,139,0.3); width: 100%; height: 100%; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+        .tarot-back-title { font-size: 0.85rem; font-weight: bold; letter-spacing: 2px; border-top: 1px dashed #FF6B8B; border-bottom: 1px dashed #FF6B8B; padding: 2px 0; }
+        .tarot-front { background: #FFFFFF; border: 3px double var(--primary-pink); transform: rotateY(180deg); }
+        .tarot-icon { font-size: 2.2rem; margin-bottom: 12px; }
+        .tarot-title { font-size: 0.95rem; font-weight: bold; }
+
+        /* 实习履历深度优化布局 */
+        .timeline { display: flex; flex-direction: column; gap: 35px; }
+        .timeline-item { background: #fff; border-radius: var(--border-radius); padding: 35px; border: 3px solid #FFE4E1; box-shadow: 6px 6px 0px #FFE4E1; }
+        .timeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .company-tag { background: var(--primary-blue); padding: 8px 22px; border-radius: 20px; font-weight: bold; font-size: 1.05rem; }
+        .exp-details { font-size: 0.95rem; line-height: 1.75; }
+        .exp-details h4 { margin: 15px 0 6px 0; color: #FF6B8B; font-size: 1rem; }
+        .exp-details h4:first-child { margin-top: 0; }
+
+        /* 产品案例 */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
+        .project-card { background: #fff; border-radius: var(--border-radius); border: 3px solid var(--primary-green); box-shadow: 6px 6px 0px var(--primary-green); padding: 28px; }
+        .project-badge { display: inline-block; background: #E8F5E9; color: #2E7D32; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; margin-bottom: 12px; font-weight: bold; }
+
+        /* 生活高光板块 4 列 3D 翻转矩阵布局 */
+        .gallery-tarot-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 25px; }
+        .life-stage { height: 400px; perspective: 1200px; cursor: pointer; }
+        .life-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .life-stage.flipped .life-card-inner { transform: rotateY(180deg); }
+        .life-front, .life-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: var(--border-radius); padding: 18px; }
+        .life-back { background: linear-gradient(135deg, #FFF0F5 0%, #E3F2FD 100%); border: 4px double #FFD1DC; }
+        .life-back-box { border: 2px dashed var(--primary-pink); width: 100%; height: 100%; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
+        .back-magic-icon { font-size: 3rem; animation: pulse 2s infinite ease-in-out; }
+        .life-front { background: #FFFFFF; border: 4px solid var(--primary-pink); transform: rotateY(180deg); display: flex; flex-direction: column; }
+        .img-container { width: 100%; height: 250px; overflow: hidden; border-radius: 16px; margin-bottom: 12px; position: relative; background: #FAFAFA; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 钢琴证书物理可爱贴纸 */
+        .sticker-layer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
+        .sticker-cat { position: absolute; top: 32%; left: 24%; width: 85px; height: 85px; background: #FFCCD5; border-radius: 50%; border: 4px solid #FFF; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; box-shadow: 0 6px 12px rgba(0,0,0,0.15); animation: wiggle 2.5s infinite ease-in-out; }
+        .sticker-dog { position: absolute; bottom: 10%; left: 22%; width: 70px; height: 70px; background: #E8F5E9; border-radius: 18px; border: 4px solid #FFF; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; box-shadow: 0 6px 12px rgba(0,0,0,0.15); transform: rotate(-12deg); }
+        @keyframes wiggle { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg) scale(1.03); } }
+        .gallery-desc { font-size: 0.9rem; font-weight: bold; line-height: 1.5; color: var(--text-color); margin-top: auto; }
+
+        /* --- 🎁 AI工坊：可伸缩卡片高级设计 --- */
+        .prompt-container { background: #fff; border-radius: var(--border-radius); padding: 35px; border: 3px solid var(--primary-pink); }
+        .prompt-card-collapsible {
+            background: #FAFAFA;
+            border-radius: 20px;
+            border: 2px dashed #FFD1DC;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .prompt-card-collapsible:hover {
+            box-shadow: 0 6px 15px rgba(255, 209, 220, 0.5);
+            background: #FFFDE7;
+        }
+        .prompt-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #FF6B8B;
+        }
+        .prompt-badge-click {
+            font-size: 0.85rem;
+            background: var(--primary-blue);
+            color: #0277BD;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+        .prompt-short-intro {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #777;
+        }
+        
+        /* 详细内容（默认隐藏且带有高度过渡动画） */
+        .prompt-detailed-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, margin-top 0.3s ease;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        .prompt-card-collapsible.active .prompt-detailed-content {
+            max-height: 1000px; /* 展开后的极限高度 */
+            margin-top: 20px;
+            border-top: 1px dashed #FFD1DC;
+            padding-top: 15px;
+        }
+        .prompt-block {
+            background: #FFFFFF;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #EEE;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        /* 页脚 */
+        footer { background: #fff; border-top: 3px solid var(--primary-pink); padding: 45px 20px; text-align: center; margin-top: 60px; }
+        .footer-buttons { display: flex; justify-content: center; gap: 30px; margin-bottom: 25px; }
+        .icon-btn { width: 65px; height: 65px; border-radius: 50%; background: var(--bg-color); border: 3px solid var(--primary-pink); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; transition: all 0.3s; text-decoration: none; color: inherit; position: relative; }
+        .icon-btn:hover { transform: rotate(15deg) scale(1.18); background: var(--primary-pink); }
+        .icon-btn:hover::after { content: attr(data-tips); position: absolute; bottom: 75px; background: var(--text-color); color: #fff; font-size: 0.8rem; padding: 6px 12px; border-radius: 8px; white-space: nowrap; }
+
+        @media (max-width: 992px) { .gallery-tarot-wrapper { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .navbar { padding: 10px 15px; width: 95%; }
+            .nav-links { gap: 10px; font-size: 0.75rem; }
+            .hero-section { flex-direction: column; text-align: center; padding-top: 130px; gap: 25px; }
+            .tarot-wrapper { flex-wrap: wrap; justify-content: center; }
+            .tarot-stage { width: 45%; flex: none; }
+            .gallery-tarot-wrapper { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decorations">
+        <div class="decor-item" style="top: 12%; left: 8%;">🐾</div>
+        <div class="decor-item" style="top: 22%; right: 6%;">⭐</div>
+        <div class="decor-item" style="top: 45%; left: 4%;">☁️</div>
+        <div class="decor-item" style="top: 68%; right: 10%;">🎀</div>
+    </div>
+
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">🌸 朱香凝 ✨</a>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#skills">能力塔罗</a></li>
+            <li><a href="#experience">项目履历</a></li>
+            <li><a href="#life">高光塔罗</a></li>
+            <li><a href="#prompts">AI工坊</a></li>
+        </ul>
+    </nav>
+
+    <!-- 个人首屏区域 -->
+    <header class="container hero-section" id="home">
+        <div class="avatar-container">
+            <!-- 1. 完美关联你上传至GitHub的真实照片！(默认文件名为 avatar.jpg，可根据实际上传名字微调) -->
+            <img src="me.jpg" alt="朱香凝的真人自拍照" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/094aa9b6defa472a2dcbc63353ed2ac6.jpg'">
+        </div>
+        <div class="hero-info">
+            <h1>朱香凝 (XiangNing) 🐾</h1>
+            <div class="hero-subtitle">浙江大学 · 金融硕士 (金融科技方向) 🎓</div>
+            <div class="slogan-box">
+                「用数据拆解复杂需求，将 AI 基因无缝注入产品全链路。常年沉迷于 vibe coding 的 AI 产品经理！✨」
+            </div>
+        </div>
+    </header>
+
+    <!-- 教育背景区 -->
+    <section class="container">
+        <div class="edu-grid">
+            <div class="edu-card">
+                <div class="edu-header"><span>浙江大学 (985、双一流) 🏫</span><span style="color:#FF6B8B;">2025.09 - 2027.06</span></div>
+                <p><strong>金融硕士 (金融科技方向)</strong> · 专业排名前 10% 🌟</p>
+                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: 金融机器学习方法(90)、区块链与数字货币(90)、投资学(96)</p>
+            </div>
+            <div class="edu-card">
+                <div class="edu-header"><span>上海立信会计金融学院 🏫</span><span style="color:#FF6B8B;">2021.09 - 2025.06</span></div>
+                <p><strong>金融学</strong> · 综合绩点 3.87/4.0，63门满绩 🏆</p>
+                <p style="font-size:0.85rem; color:#777; margin-top:8px;">核心课: Python技术(97)、MATLAB(98)、计量经济学(98)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ③ 技能核心塔罗牌 -->
+    <section class="container" id="skills">
+        <h2 class="section-title">产品技能核心塔罗牌 </h2>
+        <div class="tarot-wrapper">
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">🔍</div><div class="tarot-title">用户研究</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">📐</div><div class="tarot-title">Axure原型设计</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">📋</div><div class="tarot-title">需求管理</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">📊</div><div class="tarot-title">数据复盘分析</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">🤝</div><div class="tarot-title">跨部门统筹</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">💰</div><div class="tarot-title">产品商业化</div></div></div></div>
+            <div class="tarot-stage"><div class="tarot-card-inner"><div class="tarot-back"><div class="tarot-back-design">🔮<div class="tarot-back-title">TAROT</div>✨</div></div><div class="tarot-front"><div class="tarot-icon">🎯</div><div class="tarot-title">竞品调研</div></div></div></div>
+        </div>
+    </section>
+
+    <!-- 2. 深度扩充丰富后的三大顶流大厂实习履历 -->
+    <section class="container" id="experience">
+        <h2 class="section-title">大厂产品实习履历 (硬核量化成果)</h2>
+        <div class="timeline">
+            
+            <!-- 美团 -->
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div><span class="company-tag" style="background-color:#FFF9C4;">美团 | 核心商业部</span><strong style="margin-left:12px;">产品实习生</strong></div>
+                    <span style="color:#999; font-size:0.9rem;">2025.10 - 2026.02</span>
+                </div>
+                <div class="exp-details">
+                    <h4>📊 【保量卡产品全链路设计】</h4>
+                    <p>围绕商户关于广告位不可控、流量波动性大、平均投流差的核心痛点进行深度数据挖掘，分析位次分布、广告露出概率和 ROI 等关键指标。洞察到商户对于“固定广告位”的前置付费（CPT）买单意愿，主导推出“合约保量卡”产品并完成灰度投放。项目上线后，商户ACP提升26.33%，大盘广告收入显著增长63%。</p>
+                   </h4>
+                    <p>为全面保障商户购买的操作便捷性、流程安全性和营销可宣传性，重新制定了“销售统一开通权限、运营中台集中审核、审核通过后商户一键购买”的闭环链路。针对该流程，全权主导并落地搭建了销售工作台系统、凤巢系统和开店宝系统。</p>
+                    
+                    <h4>🧠 【可售流量算法管理与策略优化】</h4>
+                    <p>针对位置不固定难题，通过对不同位次广告增速的深入分析，推出 Top3 固定位置。协同算法团队设计可售卖流量预测模型，建立智能保量补量逻辑与流量库存管理系统。上线后，库存补量机制为商户带来了额外 10.5% 的流量，创造了 11.5% 的广告收入增长，帮助商户拉平 ROI 的同时实现 ROI 环比增长 2.43%。同时推出“AI关键词相关性打标策略+人工交叉验证”机制，大幅优化了排序模型的精度。</p>
+                </div>
+            </div>
+              
+
+            <!-- 携程 -->
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div><span class="company-tag" style="background-color:#E1BEE7;">携程 | 前端技术产品部</span><strong style="margin-left:12px;">产品实习生</strong></div>
+                    <span style="color:#999; font-size:0.9rem;">2026.02 - 2026.05</span>
+                </div>
+                <div class="exp-details">
+                    <h4>⚡ 【标签中台核心功能迭代与降本增效】</h4>
+                    <p>针对原有系统仅支持单条标签创建、规则配置重复低效的严峻痛点，主导设计并落地了标签自定义规则复制、批量开启打标测试、标签与实体关联关系实时查询三大核心功能。大幅精简并优化了 POI 打标、新建标签、标签上树等复杂的后台操作流转程序。上线后，单条标签规则配置时间从 20 分钟缩短至 3 分钟，中台整体配置效率疯狂提升 83.69%。</p>
+                    
+                    <h4>🤖 【大模型混合智能打标体系从0到1落地】</h4>
+                    <p>为彻底解决传统人工打标效率低下、规则主观误差巨大的问题，配合公司“AI 出行顾问小助手”核心战略项目，设计了基于多信源权重的标签置信分计算公式。成功划分了 T0 核心至 T3 长尾的四级标签架构体系，建立分层抽样测试集选取规范，首创并搭建了“LLM 大模型初标 + 人工抽样复核”的混合打标长效机制。落地后，算法标签覆盖率从 35% 暴涨至 83.52%，整体标签召回率达 90.2%，单月净节省人工打标工时 120+ 小时。</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 生活高光板块 (4张真实照片，相对路径，初始纯背面无字) -->
+    <section class="container" id="life">
+        <h2 class="section-title">香凝的生活高光 3D 塔罗牌 (点击卡片进行解密翻转)</h2>
+        <div class="gallery-tarot-wrapper">
+            
+            <!-- 浙大入学 -->
+            <div class="life-stage">
+                <div class="life-card-inner">
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎓</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【新上人卡】</span></div></div>
+                    <div class="life-front">
+                        <div class="img-container"><img src="zju.jpg.jpg" alt="浙大开学留念" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/a6c7417bc115325858f87bb7aeee25e0.jpg'"></div>
+                        <div class="gallery-desc">🦁 【新上人卡】求是创新，开启在浙江大学追求金融科技梦想的全新序章！</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 萌猫主子 -->
+            <div class="life-stage">
+                <div class="life-card-inner">
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🐈</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【萌猫卡】</span></div></div>
+                    <div class="life-front">
+                        <div class="img-container"><img src="cats.jpg.jpg" alt="猫咪主子" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/a980dc15bf4d60791dbeeee3d71323c2.jpg'"></div>
+                        <div class="gallery-desc">🐱 【萌猫卡】陪伴我疯狂学术研究与兼顾大厂实习的三只高颜值猫咪主子</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 钢琴证书 -->
+            <div class="life-stage">
+                <div class="life-card-inner">
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🎹</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【爱好卡】</span></div></div>
+                    <div class="life-front">
+                        <div class="img-container">
+                            <img src="piano.jpg.jpg" alt="钢琴十级证书" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/7e05a18102bba68457f4b761db7c68eb.jpg'">
+                            <div class="sticker-layer"><div class="sticker-cat">🐱</div><div class="sticker-dog">🐶🐾</div></div>
+                        </div>
+                        <div class="gallery-desc">🎹 【爱好卡】热爱钢琴</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 元气童心 -->
+            <div class="life-stage">
+                <div class="life-card-inner">
+                    <div class="life-back"><div class="life-back-box"><div class="back-magic-icon">🏰</div><span style="font-weight:bold; color:#FF6B8B;">点击解密【童心卡】</span></div></div>
+                    <div class="life-front">
+                        <div class="img-container"><img src="disney.jpg.jpg" alt="迪士尼合影" onerror="this.src='https://andor-static.oss-cn-hangzhou.aliyuncs.com/share/d410046f3b0363fa6ebfcc3666d0029a.jpg'"></div>
+                        <div class="gallery-desc">✨ 【童心卡】常葆满格童心、好奇心与敏锐生活洞察力</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ③ AI 工坊：可折叠/可收缩的高级Prompt小方格 -->
+    <section class="container" id="prompts">
+        <div class="prompt-container">
+            <h2 class="section-title" style="transform:none; left:0; text-align:left;">🤖 香凝的 AI 狂热爱好工坊</h2>
+            <p style="font-size:0.95rem; color:#777; margin-bottom: 20px;">常年沉迷大模型应用层开发，擅长通过高精度的级联式 Prompt 策略，将大模型能力完美糅合进复杂的业务场景：</p>
+            
+            <!-- 可伸缩 Prompt 卡片 -->
+            <div class="prompt-card-collapsible" id="qqmusicPromptCard">
+                <div class="prompt-card-header">
+                    <span>🎵 QQ音乐专业级歌曲情绪与风格分析标签算法 Prompt</span>
+                    <span class="prompt-badge-click" id="toggleBadge">点击展开详细 展开/收起</span>
+                </div>
+                <div class="prompt-short-intro">
+                    <strong>缩略简介：</strong>该智能体充当QQ音乐精细化打标中台核心引擎，负责对海量复杂歌词、评论等多模态信源进行极度严苛的“少而精”标签聚类，杜绝模糊输出[cite: 2]。
+                </div>
+                
+                <!-- 隐藏的详细模式 -->
+                <div class="prompt-detailed-content">
+                    <p><strong>完整的业务级 System Prompt 规则设计：</strong></p>
+                    <div class="prompt-block"># Role
+你是一名资深旅游产品评估专家。你的任务是阅读给定的旅游产品文本片段（Chunk），根据候选标签列表，对每个标签进行 0-10 分评分。
+
+# Goal
+你的评分用于判断：该文本片段能为某个标签提供多强的“有效支持证据”。
+请注意：你评估的是“当前 Chunk 对该标签的支持强度”，而不是直接判断整个产品是否属于该标签主题产品。
+
+# Core Evaluation Logic
+请按以下顺序进行判断：
+
+## Step 1. Direct Relevance (直接相关性)
+先判断该标签是否被文本直接表达，而不是仅仅场景相关或联想相关。
+
+- Direct: 文本明确描述了该标签对应的活动、权益、服务、场景或状态
+- Indirect: 只是相关背景、环境、联想，不构成直接证据
+- None: 没有证据
+
+规则：
+- 如果只是场景联想，不应高分，必要时给 0 分
+- 例如：
+  - 海边/海景酒店 ≠ 潜水
+  - 雪山风景 ≠ 滑雪
+  - 适合情侣 ≠ 蜜月核心卖点
+  - 有儿童可以参加 ≠ 亲子产品成立
+
+## Step 2. Commitment (确权/承诺)
+判断该标签是确定包含、仅接触、还是可选机会。这是最重要的维度之一，并决定分数上限。
+
+- Included/Paid: 明确包含、已安排、含门票/含体验/含装备/已入住/专属权益
+- Touch: 仅外观、路过、车览、自由活动、打卡、参观外部
+- Optional: 自费、自理、推荐、可选、二选一
+- Conditional: 是否发生取决于天气、时间、政策、开放情况等条件
+
+硬规则：
+1. Optional（自费/推荐/可选）：分数不得超过 3 分
+2. Touch（外观/路过/车览）：分数不得超过 6 分
+3. Conditional（条件成立才发生）：不得按“确定包含”高分处理，应明显降分
+4. 若出现“不含/未含/需自理”，不得作为正向强证据
+
+## Step 3. Centrality (核心性)
+判断该标签在这段文本中是核心内容，还是次要补充。
+
+- Primary: 该标签是这段内容的核心活动、核心属性或主要卖点
+- Secondary: 该标签明确存在，但不是主角
+- Incidental: 只是顺带提及、背景信息、附属属性
+
+规则：
+- 不要因为旅游场景相近，就自动给相关标签打分
+- 必须判断该标签本身是不是这段文本想表达的重点
+
+## Step 4. Time / Depth / Value (时长 / 深度 / 价值)
+综合判断体验的持续时间、深度和价值。
+
+- 长时间、深度体验、完整活动链路：分数更高
+- 短时、浅层接触、快速打卡：分数较低
+- 但高价值短体验（如跳伞、直升机、热气球、米其林）即使时长较短，只要是 Included，也可高分
+
+## Step 5. Evidence Strength (证据强度)
+判断文本是否提供了具体、可验证的信息。
+
+- Strong: 有明确活动、权益、门票、装备、服务、入住、时长等具体信息
+- Medium: 有明确行为或安排，但细节一般
+- Weak: 只有笼统描述、营销表达、氛围化措辞
+- None: 没有足够证据
+
+规则：
+- 描述越具体，得分越高
+- “安排PADI专业教练带领深潜，含装备” > “体验潜水” > “丰富水上活动”
+- 如果文本主要是营销性表达，缺少可验证细节，通常不应给到 9-10 分
+- 但如果标签本身属于整体风格、氛围或人群定位类标签（如蜜月、慢节奏、亲子），可根据表达明确性给予中等分数
+
+# Tag Type Awareness
+请注意不同标签类型的高分条件不同：
+
+1. 事件型标签
+   例如：跳伞、热气球、直升机、米其林、极光
+   - 一次明确发生、且 Included 的高价值体验，即可高分
+   - 不要求必须长时间
+
+2. 体验型标签
+   例如：潜水、滑雪、徒步、摄影、古迹
+   - 需要明确活动安排，并结合时长、深度、是否为主要玩法来打分
+
+3. 状态型标签
+   例如：亲子、蜜月、纯玩、慢节奏
+   - 需要体现为整体服务、氛围、节奏或明确的人群友好设计
+   - 单一场景、单个词语、泛化营销表达，通常不能高分
+
+# Negative Signals (削弱信号)
+若出现以下表达，应降分或限制上限：
+- 不含、不送、不提供
+- 自费、自理、推荐参加、可选
+- 外观、远眺、车览、路过、打卡
+- 如有时间、视天气而定、视政策或开放情况安排
+- 可自行前往、周边可体验、适合拍照
+- 自由活动但未明确包含相关体验
+
+# Scoring Anchors
+请使用以下分数锚点：
+
+- 0: 没有证据，或只是场景联想/弱关联
+- 1-2: 有模糊关联，但未形成实际产品权益或明确体验
+- 3: 明确提及，但仅为自费/推荐/可选/弱机会
+- 4-5: 确有相关接触，但为浅层、短时、非核心体验
+- 6: 明确存在，是有效组成部分，但不是主要卖点
+- 7-8: 明确包含，且是重要体验或重要属性
+- 9-10: 明确包含，且是核心卖点之一，证据具体充分
+
+# Important Notes
+1. 你的任务是评估当前 Chunk 对标签的“证据强度”，不是直接代表整个产品最终标签结论
+2. 不要仅因出现关键词而给分，必须有明确语义证据
+3. 不要把“场景相关”误判为“标签成立”
+4. 对营销字段中的内容，不要一刀切压低；若表达明确且指向清楚，可以给中等分数，但缺少可验证细节时通常不要打到 9-10 分
+
+# Output Requirements
+请**仅**输出 score > 0 的标签，输出 JSON 数组。每个元素必须包含以下字段：
+- tag: 标签名称
+- score: 0-10 整数分
+- commitment_type: included | touch | optional | conditional
+- evidence_level: strong | medium | weak
+- reason: 简要说明为什么打这个分
+- evidence_span: 直接引用支持判断的关键文本片段
+
+# Output Example
+[
+  {
+    "tag": "潜水",
+    "score": 8,
+    "commitment_type": "included",
+    "evidence_level": "strong",
+    "reason": "明确安排深潜体验，属于核心活动，且含装备，证据具体",
+    "evidence_span": "安排PADI专业教练带领1次深潜体验，含装备"
+  },
+  {
+    "tag": "蜜月",
+    "score": 5,
+    "commitment_type": "included",
+    "evidence_level": "medium",
+    "reason": "文本明确传达浪漫度假定位，但缺少更具体的专属蜜月权益，适合中等分",
+    "evidence_span": "开启浪漫海岛假期，入住海边度假酒店"
+  }
+]</div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-buttons">
+            <a class="icon-btn" data-tips="微信: 15124097985">💬</a>
+            <a class="icon-btn" href="mailto:15124097985@163.com" data-tips="邮箱: 15124097985@163.com">✉️</a>
+            <a class="icon-btn" href="#" data-tips="点击下载PDF版简历">📄</a>
+        </div>
+        <p style="font-size: 0.9rem; color: #B5A69A; font-weight: bold;">✨ 中共党员 | 期待与您创造更多精彩产品 ✨</p>
+        <p style="font-size: 0.8rem; color: #CCC; margin-top: 10px;">Copyright © 2026 朱香凝. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. 生活高光 3D 翻转控制器 (完全独立控制)
+        document.querySelectorAll('.life-stage').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+            });
+        });
+
+        // 2. AI 工坊 Prompt 缩略与详细模式切换 JavaScript 控制逻辑
+        const promptCard = document.getElementById('qqmusicPromptCard');
+        const toggleBadge = document.getElementById('toggleBadge');
+
+        promptCard.addEventListener('click', (e) => {
+            promptCard.classList.toggle('active');
+            if (promptCard.classList.contains('active')) {
+                toggleBadge.innerText = '点击收起面板 ↩️';
+                toggleBadge.style.background = '#FFD1DC';
+                toggleBadge.style.color = '#D81B60';
+            } else {
+                toggleBadge.innerText = '点击展开详细 展开/收起';
+                toggleBadge.style.background = '#B3E5FC';
+                toggleBadge.style.color = '#0277BD';
+            }
+        });
+    </script>
+</body>
+</html>
